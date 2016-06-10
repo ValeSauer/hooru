@@ -1,0 +1,20 @@
+<ion-view view-title="AuthNew">
+    <ion-header-bar>
+        <h1 class="title">Welcome to Hooru.</h1>
+    </ion-header-bar>
+    <ion-content>
+        <form ng-submit="doAuth(user)">
+            <div class="list">
+                <label class="item">
+                    <p>Please tell me your name.</p>
+                </label>
+                <label class="item item-input">
+                    <input type="text" placeholder="What is your name?" ng-model="user.name" autofocus>
+                </label>
+                <label class="item">
+                    <button class="button button-block button-positive" type="submit">Login</button>
+                </label>
+            </div>
+        </form>
+    </ion-content>
+</ion-view>

@@ -155,8 +155,6 @@ angular.module('starter.controllers', [])
 
     .controller('CalcCtrl', function ($scope, $state, $http, dataService, $ionicPopup) {
 
-        $scope.difftime = 'asdasdasd';
-
         if (dataService.trainingdata.length == 0) {
             var req = {
                 method: 'GET',
@@ -189,14 +187,13 @@ angular.module('starter.controllers', [])
             });
 
             var alldata = hooruPrepare(dataService.trainingdata);
-            console.log(alldata);
-            console.log(alldata[0]["input"]);
 
             var net = new brain.NeuralNetwork();
             net.train(alldata);
             dataService.network = net.toJSON();
+            console.log(dataService.network);
 
-            var output = net.run(alldata[0]["input"]);  // [0.987]
+            var output = net.run(alldata[alldata.length - 1]["input"]);
             console.log(output);
 
             trainingpopup.close();
@@ -213,7 +210,7 @@ angular.module('starter.controllers', [])
                         text: '<b>OK</b>',
                         type: 'button-positive',
                         onTap: function (e) {
-                            $state.go('start');
+                            $state.go('result');
                             return true;
                         }
                     }
@@ -222,5 +219,28 @@ angular.module('starter.controllers', [])
 
         }
 
+    })
+
+    .controller('ResultCtrl', function ($scope, $state, $http, dataService, $ionicPopup) {
+
+        var net = new brain.NeuralNetwork();
+        console.log(dataService.network);
+        net.fromJSON(dataService.network);
+
+        var alldata = hooruPrepare(dataService.trainingdata);
+
+        var output = net.run(alldata[alldata.length - 1]["input"]);
+
+        var results = [];
+        for (key in output) {
+            results.push(Math.round(output[key] * 100000).toFixed(6) / 100000 + ": " + key);
+        }
+
+        results.sort();
+
+        console.log("The result is:");
+        console.log(results);
+
+        $scope.results = results;
     })
 

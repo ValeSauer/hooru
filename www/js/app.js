@@ -51,6 +51,12 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                 controller: 'CalcCtrl'
             })
 
+            .state('result', {
+                url: '/result',
+                templateUrl: 'templates/result.html',
+                controller: 'ResultCtrl'
+            })
+
 // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/start');
     })
@@ -62,7 +68,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         var _trainingdata = [];
         var _keydown = 0;
         var _keyduration = {};
-        var _network = {}
+        var _network = {};
 
         // public API
         this.lasttime = _lasttime;

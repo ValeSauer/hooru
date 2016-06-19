@@ -1,0 +1,27 @@
+<ion-view view-title="Auth">
+    <ion-header-bar>
+        <h1 class="title"><i class="icon ion-happy-outline"></i> Hooru</h1>
+    </ion-header-bar>
+    <ion-content padding="true">
+        <div class="row">
+            <div class="col col-center center">
+                <i class="hoorulogo icon ion-happy-outline"></i>
+                <p class="hoorutext">Hooru</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p>Hooru versucht Dich anhand der charakteristischen Dauer Deiner Tastendrücke zu erkennen. Dazu vergleicht Hooru das Profil Deiner Tastendrücke mit derzeit <span ng-bind-html="datacount"></span> Profilen anderer Nutzer.</p>
+                <p>Wenn Hooru Dein Profil noch nicht aufgezeichnet hat, so kannst Du dies nun tun. Wenn Hooru Dein Profil bereits kennt, kannst Du Dich erkenn lassen.</p>
+            </div>
+        </div>
+        <div class="row">
+            <label class="col">
+                <button class="button button-block button-positive" ng-click="doIdentify()">Mich erkennen</button>
+            </label>
+            <label class="col">
+                <button class="button button-block button-positive" ng-click="doGoToAuth()">Profil aufnehmen</button>
+            </label>
+        </div>
+    </ion-content>
+</ion-view>

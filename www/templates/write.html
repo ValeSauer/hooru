@@ -11,8 +11,9 @@
 
         <div class="row">
             <div class="col">
-                <textarea style="width: 100%" rows="10" name="write" ng-keydown="doKeyDown()" ng-keyup="doWrite(write)"
-                          ng-model="write" ng-trim="false" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus></textarea>
+                <textarea name="write" style="width: 100%" rows="10" ng-keydown="doKeyDown()" ng-keyup="doKeyUp(write)"
+                          ng-model="write" ng-trim="false" autocomplete="off" autocorrect="off" autocapitalize="off"
+                          spellcheck="false" autofocus></textarea>
             </div>
         </div>
 
@@ -26,12 +27,11 @@
         </div>
         <div class="row">
             <label class="col">
-                <button class="button button-block button-stable" ng-click="">Reset</button>
+                <button class="button button-block button-stable" ng-click="doReset()">Reset</button>
             </label>
             <label class="col">
-                <button class="button button-block button-positive" ng-click="doCalc()">Berechnen</button>
+                <button ng-disabled="incomplete" class="button button-block button-positive" ng-click="doCalc()">Absenden</button>
             </label>
         </div>
-
     </ion-content>
 </ion-view>

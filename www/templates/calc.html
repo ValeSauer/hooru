@@ -1,0 +1,22 @@
+<ion-view view-title="Calc">
+    <ion-header-bar>
+        <h1 class="title"><i class="icon ion-happy-outline"></i> Hooru</h1>
+    </ion-header-bar>
+    <ion-content scoll="false">
+        <div class="row">
+            <div class="col">
+                <p>Hooru hat deine Daten aufgezeichnet und kann diese nun mit den bisherigen <span ng-bind-html="datacount"></span> Daten vergleichen.</p>
+                <p>Dafür wird das neuronale Netz anhand der bisher vorhandenen Daten direkt auf deinem Device trainiert. Dies kann sehr lange dauern.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <label class="col">
+                <button class="button button-block button-stable" ng-click="doReset()">Abbrechen</button>
+            </label>
+            <label class="col">
+                <button class="button button-block button-positive" ng-click="doCalc()">Berechnen</button>
+            </label>
+        </div>
+    </ion-content>
+</ion-view>

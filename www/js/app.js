@@ -27,21 +27,15 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
 
+            .state('start', {
+                url: '/start',
+                templateUrl: 'templates/start.html',
+                controller: 'AuthCtrl'
+            })
+
             .state('auth', {
                 url: '/auth',
                 templateUrl: 'templates/auth.html',
-                controller: 'AuthCtrl'
-            })
-
-            .state('auth_new', {
-                url: '/auth_new',
-                templateUrl: 'templates/auth_new.html',
-                controller: 'AuthCtrl'
-            })
-
-            .state('auth_known', {
-                url: '/auth_known',
-                templateUrl: 'templates/auth_known.html',
                 controller: 'AuthCtrl'
             })
 
@@ -51,8 +45,14 @@ angular.module('starter', ['ionic', 'starter.controllers'])
                 controller: 'WriteCtrl'
             })
 
+            .state('calc', {
+                url: '/calc',
+                templateUrl: 'templates/calc.html',
+                controller: 'CalcCtrl'
+            })
+
 // if none of the above states are matched, use this as the fallback
-        $urlRouterProvider.otherwise('/auth');
+        $urlRouterProvider.otherwise('/start');
     })
 
     .service('dataService', function() {
@@ -62,11 +62,13 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         var _trainingdata = [];
         var _keydown = 0;
         var _keyduration = {};
+        var _network = {}
 
         // public API
         this.lasttime = _lasttime;
         this.trainingdata = _trainingdata;
         this.keydown = _keydown;
         this.keyduration = _keyduration;
+        this.network = _network;
     })
 ;

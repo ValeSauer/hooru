@@ -1,15 +1,37 @@
-<ion-view view-title="Auth">
+<ion-view view-title="Write">
     <ion-header-bar>
-        <h1 class="title">Hooru</h1>
+        <h1 class="title"><i class="icon ion-happy-outline"></i> Hooru</h1>
     </ion-header-bar>
-    <ion-content>
-        <div class="list">
-            <label class="item">
+    <ion-content scoll="false">
+        <div class="row">
+            <div class="col">
                 <p ng-bind-html="read"></p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <textarea style="width: 100%" rows="10" name="write" ng-keydown="doKeyDown()" ng-keyup="doWrite(write)"
+                          ng-model="write" ng-trim="false" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus></textarea>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">Zeichen: <span ng-bind-html="stat_count">0</span></div>
+            <div class="col">Druckdauer: <span ng-bind-html="stat_avg"></span></div>
+        </div>
+        <div class="row">
+            <div class="col">Distanz: <span ng-bind-html="stat_dist">0</span></div>
+            <div class="col"></div>
+        </div>
+        <div class="row">
+            <label class="col">
+                <button class="button button-block button-stable" ng-click="">Reset</button>
             </label>
-            <label class="item">
-                	<textarea style="width: 100%" rows="10" name="write" ng-keydown="doKeyDown()" ng-keyup="doWrite(write)"  ng-model="write" autofocus></textarea>
+            <label class="col">
+                <button class="button button-block button-positive" ng-click="doCalc()">Berechnen</button>
             </label>
         </div>
+
     </ion-content>
 </ion-view>

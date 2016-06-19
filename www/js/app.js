@@ -5,6 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 
+
 angular.module('starter', ['ionic', 'starter.controllers'])
 
     .run(function ($ionicPlatform) {
@@ -60,7 +61,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         var _lasttime = 0;
         var _trainingdata = [];
         var _keydown = 0;
-        var _keyduration = [];
+        var _keyduration = {};
 
         // public API
         this.lasttime = _lasttime;

@@ -1,1 +1,28 @@
 /* Empty. Add your own CSS if you like */
+
+.title{
+    color: #555753;
+}
+
+.textmarker{
+    background-color: yellow;
+}
+
+.hoorulogo{
+    font-size: 50vw;
+    color: #babdb6;
+}
+
+.hoorutext{
+    font-size: 15vw;
+    font-weight: bold;
+    color: #babdb6;
+    margin: 10vw 0;
+}
+
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
+}

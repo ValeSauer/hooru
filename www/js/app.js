@@ -3,10 +3,10 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-// 'starter.controllers' is found in controllers.js
+// 'starter.controllers' is found in result.js
 
 
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.hooru'])
+angular.module('starter', ['ionic', 'hooru.auth', 'hooru.write', 'hooru.calc', 'hooru.result', 'hooru.hooru'])
 
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
@@ -59,21 +59,4 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.hooru'])
 
 // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/start');
-    })
-
-    .service('dataService', function () {
-
-        // private variable
-        var _lasttime = 0;
-        var _trainingdata = [];
-        var _keydown = 0;
-        var _keyduration = {};
-        var _network = {};
-
-        // public API
-        this.lasttime = _lasttime;
-        this.trainingdata = _trainingdata;
-        this.keydown = _keydown;
-        this.keyduration = _keyduration;
-        this.network = _network;
     })

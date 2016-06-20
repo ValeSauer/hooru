@@ -4,8 +4,16 @@
     color: #555753;
 }
 
-.textmarker{
+.textmarker_0{
+    background-color: #4cd964;
+}
+
+.textmarker_1{
     background-color: yellow;
+}
+
+.textmarker_2{
+    background-color: red;
 }
 
 .hoorulogo{

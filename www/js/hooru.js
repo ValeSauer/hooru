@@ -3,87 +3,215 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-// 'starter.controllers' is found in controllers.js
+// 'starter.controllers' is found in result.js
 
 
-angular.module('starter.hooru', [])
+angular.module('hooru.hooru', [])
 
-    .service('Hooru', function () {
+    .service('hooru', function ($http) {
 
         // private variable
-        var _token = hooru_config.token;
-        var _lasttime = 0;
-        var _trainingdata = [];
-        var _keydown = 0;
-        var _keyduration = {};
-        var _network = {};
+        var _token = hooru_config.token;            // Das Token für die API-Calls
+        var _lastkey = 0;                           // Zeitpunkt des letzten Keydown
+        var _keydown = 0;                           // Zeitpunkt des aktuellen Keydown
+        var _profiledata = [];                      // Die eigenen Lerndaten
+        var _trainingdata = [];                     // Der gesamte Datensatz -> kommt aus der API
+        var _network = {};                          // Das JSON-codierte, trainierte Netzwerk
 
         // public API
         this.token = _token;
-        this.lasttime = _lasttime;
-        this.trainingdata = _trainingdata;
+        this.lastkey = _lastkey;
         this.keydown = _keydown;
-        this.keyduration = _keyduration;
+        this.profiledata = _profiledata;
+        this.trainingdata = _trainingdata;
         this.network = _network;
 
-        var HooruData = {
-            a: 0,
-            b: 0,
-            c: 0,
-            d: 0,
-            e: 0,
-            f: 0,
-            g: 0,
-            h: 0,
-            i: 0,
-            j: 0,
-            k: 0,
-            l: 0,
-            m: 0,
-            n: 0,
-            o: 0,
-            p: 0,
-            q: 0,
-            r: 0,
-            s: 0,
-            t: 0,
-            u: 0,
-            v: 0,
-            w: 0,
-            x: 0,
-            y: 0,
-            z: 0,
-            dot: 0,
-            comma: 0,
-            space: 0
+        var self = this;
+
+        this.texts = [
+            "test",
+            "test1",
+            "test2"
+            // "Ganze zwölf große Boxkämpfer jagen Viktor quer über den Sylter Deich, d0ch er kann s1ch r3tten.",
+            // "Fast jeder wackere Bayer vertilgt sich bequem zwei Pfund Kalbshaxen, d0ch auch er kann n1cht an Knöd3ln sparen.",
+            // "Auch Stanleys Expeditionszug quer durchs schöne Afrika w1rd von jedermann bewundert, d0ch n1cht von sich s3lbst."
+        ];
+
+        this.setTrainingdata = function (trainingdata) {
+            window.localStorage.setItem("trainingdata", JSON.stringify(trainingdata));
         }
 
-        this.hooruNormalize = function (dataset) {
-            var normset = HooruData;
-            for (key in normset) {
-                if (dataset[key]) {
-                    normset[key] = getCharAveragetime(dataset[key]);
-                } else {
-                    if (key == "space") {
-                        normset[key] = getCharAveragetime(dataset[" "]);
-                    } else if (key == "comma") {
-                        normset[key] = getCharAveragetime(dataset[","]);
-                    } else if (key == "dot") {
-                        normset[key] = getCharAveragetime(dataset["."]);
-                    }
+        this.getTrainingdata = function () {
+            return JSON.parse(window.localStorage.getItem("trainingdata"));
+        }
+
+        this.isAuthenticated = function () {
+            if (window.localStorage.getItem("username") && window.localStorage.getItem("device")) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        this.keyUp = function (key) {
+            var d = new Date();
+            var now = d.getTime();
+            if (key == " ") {
+                key = "dot"
+            }
+            ;
+            if (key == ",") {
+                key = "comma"
+            }
+            ;
+            if (key == "0") {
+                key = "space"
+            }
+            ;
+            if (this.profiledata[key]) {
+                var data = this.profiledata[key];
+                data.duration += (now - this.keydown);
+                data.latency += (now - this.lastkey);
+                data.count += 1;
+                this.profiledata[key] = data;
+                this.lastkey = now;
+            }
+            console.log(this.profiledata);
+        }
+
+        this.keyDown = function () {
+            var d = new Date();
+            var now = d.getTime();
+            this.keydown = now;
+        }
+
+        this.getError = function (a, b) {
+            var distArray = levenshteinenator(a, b);
+            var dist = distArray[distArray.length - 1][distArray[distArray.length - 1].length - 1];
+            if (dist > 2) {
+                dist = 2;
+            }
+            return dist;
+        }
+
+        function hd(){
+            this.duration = 0;
+            this.latency = 0;
+            this.count = 0;
+        }
+
+        function HooruData() {
+            this["0"] = new hd();
+            this["1"] = new hd();
+            this["3"] = new hd();
+            this["a"] = new hd();
+            this["b"] = new hd();
+            this["c"] = new hd();
+            this["d"] = new hd();
+            this["e"] = new hd();
+            this["f"] = new hd();
+            this["g"] = new hd();
+            this["h"] = new hd();
+            this["i"] = new hd();
+            this["j"] = new hd();
+            this["k"] = new hd();
+            this["l"] = new hd();
+            this["m"] = new hd();
+            this["n"] = new hd();
+            this["o"] = new hd();
+            this["p"] = new hd();
+            this["q"] = new hd();
+            this["r"] = new hd();
+            this["s"] = new hd();
+            this["t"] = new hd();
+            this["u"] = new hd();
+            this["v"] = new hd();
+            this["w"] = new hd();
+            this["x"] = new hd();
+            this["y"] = new hd();
+            this["z"] = new hd();
+            this["dot"] = new hd();
+            this["comma"] = new hd();
+            this["space"] = new hd();
+        }
+
+        this.profiledata = new HooruData();
+
+
+        this.upload = function () {
+            var mydata = {
+                username: window.localStorage.getItem("username"),
+                device: window.localStorage.getItem("device"),
+                dataset: this.getNormalizedProfileData()
+            };
+            var req = {
+                method: 'POST',
+                url: 'http://hooru.sauer-medientechnik.de/server/index.php?method=add&token=' + this.token,
+                headers: {
+                    'Content-Type': undefined
+                },
+                data: mydata
+            }
+
+            $http(req).then(function (response) {
+                // success
+                if (response.data) {
+                    self.setTrainingdata(response.data);
+                    self.profiledata = new HooruData();
+                }
+            }, function () {
+                console.log("Upload error");
+            });
+        }
+
+        this.resetProfiledata = function(){
+            this.profiledata = null;
+            this.profiledata = new HooruData();
+        }
+
+        this.download = function () {
+            var req = {
+                method: 'GET',
+                url: 'http://hooru.sauer-medientechnik.de/server/index.php?method=get&token=' + this.token,
+                headers: {
+                    'Content-Type': undefined
+                },
+            }
+
+            $http(req).then(function (response) {
+                // success
+                if (response.data.length > 0) {
+                    self.setTrainingdata(response.data);
+                }
+            }, function () {
+                // error
+            });
+        }
+
+
+        this.getNormalizedProfileData = function () {
+            console.log(this.profiledata);
+            var normset = {};
+            for (key in this.profiledata) {
+                if (this.profiledata[key]) {
+                    console.log(key);
+                    normset["*" + key] = this.profiledata[key].latency / this.profiledata[key].count;
+                    normset[key] = this.profiledata[key].duration / this.profiledata[key].count;
                 }
             }
-            return normset;
+            console.log(JSON.stringify(normset));
+            return JSON.stringify(normset);
         }
 
-        this.hooruPrepare = function (datasets) {
+        this.prepare = function () {
+            var datasets = this.getTrainingdata();
             var prepsets = [];
             if (datasets && datasets.length > 0) {
                 for (var i = 0; i < datasets.length; i++) {
                     outputname = datasets[i].username + "_" + datasets[i].device;
                     var prepset = {
                         input: JSON.parse(datasets[i].dataset),
-                        output: { [outputname] : 1}
+                        output: {[outputname]: 1}
                     }
                     prepsets.push(prepset)
                 }
@@ -91,46 +219,8 @@ angular.module('starter.hooru', [])
             }
         }
 
-
-        this.getCount = function (dataset) {
-            var size = 0, key;
-            for (key in dataset) {
-                if (dataset.hasOwnProperty(key)) size++;
-            }
-            return size;
-        };
-
-        this.getAveragetime = function (dataset) {
-            var count = getCount(dataset);
-            var sum = 0;
-
-            if (dataset && count > 0) {
-                for (key in dataset) {
-                    if (dataset.hasOwnProperty(key)) {
-                        sum += getCharAveragetime(dataset[key]);
-                    }
-                }
-                return sum / count;
-            } else {
-                return 0;
-            }
-
-        }
-
-        this.getCharAveragetime = function (dataset) {
-            var count = getCount(dataset);
-            if (dataset && count > 0) {
-                var sum = 0;
-                for (var i = 0; i < count; i++) {
-                    sum += dataset[i];
-                }
-                return sum / count / 100;
-            } else {
-                return 0;
-            }
-        }
-
-    });
+    })
+;
 
 
 var levenshteinenator = (function () {

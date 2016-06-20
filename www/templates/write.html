@@ -1,6 +1,7 @@
 <ion-view view-title="Write">
-    <ion-header-bar>
-        <h1 class="title"><i class="icon ion-happy-outline"></i> Hooru</h1>
+    <ion-header-bar class="bar bar-header bar-dark">
+        <button class="button button-clear"><i class="icoc ion-arrow-left-b"> zurück</i></button>
+        <h1 class="title" ng-bind-html="title"></h1>
     </ion-header-bar>
     <ion-content scroll="false">
         <div class="row">
@@ -11,19 +12,10 @@
 
         <div class="row">
             <div class="col">
-                <textarea name="write" style="width: 100%" rows="10" ng-keydown="doKeyDown()" ng-keyup="doKeyUp(write)"
+                <textarea name="write" style="width: 100%" rows="3" ng-keydown="doKeyDown()" ng-keyup="doKeyUp(write)"
                           ng-model="write" ng-trim="false" autocomplete="off" autocorrect="off" autocapitalize="off"
                           spellcheck="false" autofocus></textarea>
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col">Zeichen: <span ng-bind-html="stat_count">0</span></div>
-            <div class="col">Druckdauer: <span ng-bind-html="stat_avg"></span></div>
-        </div>
-        <div class="row">
-            <div class="col">Distanz: <span ng-bind-html="stat_dist">0</span></div>
-            <div class="col"></div>
         </div>
         <div class="row">
             <label class="col">

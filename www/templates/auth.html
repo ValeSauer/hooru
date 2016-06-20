@@ -1,6 +1,8 @@
 <ion-view view-title="AuthNew">
-    <ion-header-bar>
-        <h1 class="title"><i class="icon ion-happy-outline"></i> Hooru</h1>
+
+    <ion-header-bar class="bar bar-header bar-dark">
+        <button class="button button-clear"><i class="icoc ion-arrow-left-b"> zurück</i></button>
+        <h1 class="title">Anmelden</h1>
     </ion-header-bar>
     <ion-content>
         <form ng-submit="doAuth(user)">
@@ -17,7 +19,7 @@
                 <div class="item">
                     <ion-radio ng-model="user.device" ng-value="'Desktop'">Desktop</ion-radio>
                     <ion-radio ng-model="user.device" ng-value="'Tablet'">Tablet</ion-radio>
-                     <ion-radio ng-model="user.device" ng-value="'Smartphone'">Smartphone</ion-radio>
+                    <ion-radio ng-model="user.device" ng-value="'Smartphone'">Smartphone</ion-radio>
                 </div>
             </div>
             <div class="row">

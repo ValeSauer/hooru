@@ -1,105 +1,134 @@
-var HooruData = {
-    a: 0,
-    b: 0,
-    c: 0,
-    d: 0,
-    e: 0,
-    f: 0,
-    g: 0,
-    h: 0,
-    i: 0,
-    j: 0,
-    k: 0,
-    l: 0,
-    m: 0,
-    n: 0,
-    o: 0,
-    p: 0,
-    q: 0,
-    r: 0,
-    s: 0,
-    t: 0,
-    u: 0,
-    v: 0,
-    w: 0,
-    x: 0,
-    y: 0,
-    z: 0,
-    dot: 0,
-    comma: 0,
-    space: 0
-}
+// Ionic Starter App
 
-hooruNormalize = function (dataset) {
-    var normset = HooruData;
-    for (key in normset) {
-        if (dataset[key]) {
-            normset[key] = getCharAveragetime(dataset[key]);
-        } else {
-            if (key == "space") {
-                normset[key] = getCharAveragetime(dataset[" "]);
-            } else if (key == "comma") {
-                normset[key] = getCharAveragetime(dataset[","]);
-            } else if (key == "dot") {
-                normset[key] = getCharAveragetime(dataset["."]);
+// angular.module is a global place for creating, registering and retrieving Angular modules
+// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
+// the 2nd parameter is an array of 'requires'
+// 'starter.controllers' is found in controllers.js
+
+
+angular.module('starter', [])
+
+    .service('Hooru', function () {
+
+        var HooruData = {
+            a: 0,
+            b: 0,
+            c: 0,
+            d: 0,
+            e: 0,
+            f: 0,
+            g: 0,
+            h: 0,
+            i: 0,
+            j: 0,
+            k: 0,
+            l: 0,
+            m: 0,
+            n: 0,
+            o: 0,
+            p: 0,
+            q: 0,
+            r: 0,
+            s: 0,
+            t: 0,
+            u: 0,
+            v: 0,
+            w: 0,
+            x: 0,
+            y: 0,
+            z: 0,
+            dot: 0,
+            comma: 0,
+            space: 0
+        }
+
+        // private variable
+        var _lasttime = 0;
+        var _trainingdata = [];
+        var _keydown = 0;
+        var _keyduration = {};
+        var _network = {};
+
+        // public API
+        this.lasttime = _lasttime;
+        this.trainingdata = _trainingdata;
+        this.keydown = _keydown;
+        this.keyduration = _keyduration;
+        this.network = _network;
+
+        this.hooruNormalize = function (dataset) {
+            var normset = HooruData;
+            for (key in normset) {
+                if (dataset[key]) {
+                    normset[key] = getCharAveragetime(dataset[key]);
+                } else {
+                    if (key == "space") {
+                        normset[key] = getCharAveragetime(dataset[" "]);
+                    } else if (key == "comma") {
+                        normset[key] = getCharAveragetime(dataset[","]);
+                    } else if (key == "dot") {
+                        normset[key] = getCharAveragetime(dataset["."]);
+                    }
+                }
+            }
+            return normset;
+        }
+
+        this.hooruPrepare = function (datasets) {
+            var prepsets = [];
+            if (datasets && datasets.length > 0) {
+                for (var i = 0; i < datasets.length; i++) {
+                    outputname = datasets[i].username + "_" + datasets[i].device;
+                    var prepset = {
+                        input: JSON.parse(datasets[i].dataset),
+                        output: { [outputname] : 1}
+                    }
+                    prepsets.push(prepset)
+                }
+                return prepsets;
             }
         }
-    }
-    return normset;
-}
 
-hooruPrepare = function (datasets) {
-    var prepsets = [];
-    if (datasets && datasets.length > 0) {
-        for (var i = 0; i < datasets.length; i++) {
-            outputname = datasets[i].username + "_" + datasets[i].device;
-            var prepset = {
-                input: JSON.parse(datasets[i].dataset),
-                output: { [outputname] : 1}
+
+        this.getCount = function (dataset) {
+            var size = 0, key;
+            for (key in dataset) {
+                if (dataset.hasOwnProperty(key)) size++;
             }
-            prepsets.push(prepset)
+            return size;
+        };
+
+        this.getAveragetime = function (dataset) {
+            var count = getCount(dataset);
+            var sum = 0;
+
+            if (dataset && count > 0) {
+                for (key in dataset) {
+                    if (dataset.hasOwnProperty(key)) {
+                        sum += getCharAveragetime(dataset[key]);
+                    }
+                }
+                return sum / count;
+            } else {
+                return 0;
+            }
+
         }
-        return prepsets;
-    }
-}
 
-getCount = function (dataset) {
-    var size = 0, key;
-    for (key in dataset) {
-        if (dataset.hasOwnProperty(key)) size++;
-    }
-    return size;
-};
-
-getAveragetime = function (dataset) {
-    var count = getCount(dataset);
-    var sum = 0;
-
-    if (dataset && count > 0) {
-        for (key in dataset) {
-            if (dataset.hasOwnProperty(key)) {
-                sum += getCharAveragetime(dataset[key]);
+        this.getCharAveragetime = function (dataset) {
+            var count = getCount(dataset);
+            if (dataset && count > 0) {
+                var sum = 0;
+                for (var i = 0; i < count; i++) {
+                    sum += dataset[i];
+                }
+                return sum / count / 100;
+            } else {
+                return 0;
             }
         }
-        return sum / count;
-    } else {
-        return 0;
-    }
 
-}
-
-getCharAveragetime = function (dataset) {
-    var count = getCount(dataset);
-    if (dataset && count > 0) {
-        var sum = 0;
-        for (var i = 0; i < count; i++) {
-            sum += dataset[i];
-        }
-        return sum / count / 100;
-    } else {
-        return 0;
-    }
-}
+    });
 
 
 var levenshteinenator = (function () {

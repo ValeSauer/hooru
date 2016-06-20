@@ -61,7 +61,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         $urlRouterProvider.otherwise('/start');
     })
 
-    .service('dataService', function() {
+    .service('dataService', function () {
 
         // private variable
         var _lasttime = 0;
@@ -77,4 +77,3 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         this.keyduration = _keyduration;
         this.network = _network;
     })
-;

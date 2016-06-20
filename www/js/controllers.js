@@ -1,13 +1,10 @@
 angular.module('starter.controllers', [])
 
-    .controller('AuthCtrl', function ($scope, $state, $http, dataService, $ionicPopup) {
+    .controller('AuthCtrl', function ($scope, $state, $http, dataService, $ionicPopup, Hooru) {
 
         var req = {
             method: 'GET',
-            url: 'http://hooru.sauer-medientechnik.de/server/index.php?method=get',
-            headers: {
-                'Content-Type': undefined
-            }
+            url: 'http://hooru.sauer-medientechnik.de/server/index.php?method=get'
         }
 
         $http(req).then(function (response) {
@@ -79,9 +76,6 @@ angular.module('starter.controllers', [])
             var req = {
                 method: 'POST',
                 url: 'http://hooru.sauer-medientechnik.de/server/index.php?method=add',
-                headers: {
-                    'Content-Type': undefined
-                },
                 data: mydata
             }
 
@@ -158,10 +152,7 @@ angular.module('starter.controllers', [])
         if (dataService.trainingdata.length == 0) {
             var req = {
                 method: 'GET',
-                url: 'http://hooru.sauer-medientechnik.de/server/index.php?method=get',
-                headers: {
-                    'Content-Type': undefined
-                }
+                url: 'http://hooru.sauer-medientechnik.de/server/index.php?method=get'
             }
 
             $http(req).then(function (response) {

@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 
 
-angular.module('starter', [])
+angular.module('starter.hooru', [])
 
     .service('Hooru', function () {
 

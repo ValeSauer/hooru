@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 
 
-angular.module('starter', ['ionic', 'starter.controllers'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.hooru'])
 
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {

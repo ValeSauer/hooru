@@ -10,6 +10,22 @@ angular.module('starter.hooru', [])
 
     .service('Hooru', function () {
 
+        // private variable
+        var _token = hooru_config.token;
+        var _lasttime = 0;
+        var _trainingdata = [];
+        var _keydown = 0;
+        var _keyduration = {};
+        var _network = {};
+
+        // public API
+        this.token = _token;
+        this.lasttime = _lasttime;
+        this.trainingdata = _trainingdata;
+        this.keydown = _keydown;
+        this.keyduration = _keyduration;
+        this.network = _network;
+
         var HooruData = {
             a: 0,
             b: 0,
@@ -41,20 +57,6 @@ angular.module('starter.hooru', [])
             comma: 0,
             space: 0
         }
-
-        // private variable
-        var _lasttime = 0;
-        var _trainingdata = [];
-        var _keydown = 0;
-        var _keyduration = {};
-        var _network = {};
-
-        // public API
-        this.lasttime = _lasttime;
-        this.trainingdata = _trainingdata;
-        this.keydown = _keydown;
-        this.keyduration = _keyduration;
-        this.network = _network;
 
         this.hooruNormalize = function (dataset) {
             var normset = HooruData;

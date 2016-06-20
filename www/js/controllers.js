@@ -4,7 +4,7 @@ angular.module('starter.controllers', [])
 
         var req = {
             method: 'GET',
-            url: 'http://hooru.sauer-medientechnik.de/server/index.php?method=get'
+            url: 'http://hooru.sauer-medientechnik.de/server/index.php?method=get&token=' + Hooru.token
         }
 
         $http(req).then(function (response) {

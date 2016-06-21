@@ -42,7 +42,10 @@ angular.module('starter', ['ionic', 'hooru.auth', 'hooru.write', 'hooru.calc', '
             .state('write', {
                 url: '/write',
                 templateUrl: 'templates/write.html',
-                controller: 'WriteCtrl'
+                controller: 'WriteCtrl',
+                params: {
+                    mode: 'write'
+                },
             })
 
             .state('calc', {
@@ -55,6 +58,15 @@ angular.module('starter', ['ionic', 'hooru.auth', 'hooru.write', 'hooru.calc', '
                 url: '/result',
                 templateUrl: 'templates/result.html',
                 controller: 'ResultCtrl'
+            })
+
+            .state('identify', {
+                url: '/identify',
+                templateUrl: 'templates/write.html',
+                controller: 'WriteCtrl',
+                params: {
+                    mode: 'identify'
+                },
             })
 
 // if none of the above states are matched, use this as the fallback

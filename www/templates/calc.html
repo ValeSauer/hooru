@@ -5,17 +5,18 @@
     <ion-content scoll="false">
         <div class="row">
             <div class="col">
-                <p>Hooru hat deine Daten aufgezeichnet und kann diese nun mit den bisherigen <span ng-bind-html="datacount"></span> Daten vergleichen.</p>
-                <p>Dafür wird das neuronale Netz anhand der bisher vorhandenen Daten direkt auf deinem Device trainiert. Dies kann sehr lange dauern.</p>
+                <p>Hooru hat deine Daten aufgezeichnet.</p>
+                <p>Um dich zu erkennen, muss das neuronale Netzwerk in Hooru auf das Profil deiner Tastendrücke trainiert werden.
+                    Dies geht auf Desktop-Computern relativ schnell, kann auf mobilen Devices aber sehr lange dauern.</p>
             </div>
         </div>
 
         <div class="row">
             <label class="col">
-                <button class="button button-block button-stable" ng-click="doReset()">Abbrechen</button>
+                <button class="button button-block button-stable" ng-click="doStart()">Zum Start</button>
             </label>
             <label class="col">
-                <button class="button button-block button-positive" ng-click="doCalc()">Berechnen</button>
+                <button class="button button-block button-positive" ng-click="doCalc()">Trainieren</button>
             </label>
         </div>
     </ion-content>

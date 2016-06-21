@@ -12,7 +12,7 @@
 
         <div class="row">
             <div class="col">
-                <textarea name="write" style="width: 100%" rows="3" ng-keydown="doKeyDown()" ng-keyup="doKeyUp(write)"
+                <textarea name="write" style="width: 100%" rows="3" ng-keydown="doKeyDown()" ng-keyup="doKeyUp($event, write)"
                           ng-model="write" ng-trim="false" autocomplete="off" autocorrect="off" autocapitalize="off"
                           spellcheck="false" autofocus></textarea>
             </div>

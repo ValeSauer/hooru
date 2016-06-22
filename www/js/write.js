@@ -12,13 +12,11 @@ angular.module('hooru.write', [])
             template: 'Hooru wird nun dein Profil aufzeichnen. Bitte tippe dafür die folgenden Texte möglichst genau ab.'
         });
 
-
-        $scope.step = 0;
-        $scope.write = "";
         function preparestep(step){
             // Prepare for next step
             $scope.step = step;
             hooru.lastkey = 0;
+            hooru.lastlength = 0;
 
             if(step == 'identify'){
                 $scope.title = "Erkennen";
@@ -33,7 +31,11 @@ angular.module('hooru.write', [])
             $scope.incomplete = true;
         }
 
-        if($state.params.mode == 'write'){
+
+        hooru.resetProfiledata();
+        this.write = "";
+
+        if($state.current.name == 'write'){
             preparestep(0);
         }else{
             preparestep('identify');
@@ -42,16 +44,21 @@ angular.module('hooru.write', [])
         /*
          When a key is released track all the data
          */
-        $scope.doKeyUp = function (e, write) {
+        $scope.doKeyUp = function (write) {
 
-            var key = e.charCode || e.keyCode || 0;
-            console.log(key);
+            var key = write.substr(write.length - 1, 1).toLowerCase();
 
             var part1 = hooru.texts[$scope.step].substr(0, write.length);
             var part2 = hooru.texts[$scope.step].substr(write.length)
-            key = write.substr(write.length - 1, 1).toLowerCase();
-            hooru.keyUp(key);
-            $scope.read = "<span class='textmarker_" + hooru.getError(part1, write) + "'>" + part1 + "</span>" + part2;
+
+            var lverror = hooru.getError(part1, write);
+
+            if(lverror == 0 && write.length > hooru.lastlength){
+                hooru.keyUp(key);
+            }
+            hooru.lastlength = write.length;
+
+            $scope.read = "<span class='textmarker_" + lverror + "'>" + part1 + "</span>" + part2;
 
             if (write.length == hooru.texts[$scope.step].length && hooru.getError(hooru.texts[$scope.step], write) <= 1) {
                 if($state.params.mode == 'write'){
@@ -67,8 +74,6 @@ angular.module('hooru.write', [])
                         this.write = "";
                     }
                 }else{
-
-                    hooru.setOutput();
 
                     var trainingpopup = $ionicPopup.alert({
                         title: "Arbeite.",
@@ -87,12 +92,11 @@ angular.module('hooru.write', [])
                     $http(req).then(function (response) {
                         // success
                         if (response.data) {
-                            console.log("Trained Network downloaded");
                             var net = new brain.NeuralNetwork();
                             net.fromJSON(JSON.parse(response.data));
                             var mydata = hooru.getNormalizedProfileData();
+                            var output = false;
                             var output = net.run(mydata);
-                            console.log(output);
                             hooru.setOutput(output);
                             trainingpopup.close();
                             $state.go('result');
@@ -104,21 +108,19 @@ angular.module('hooru.write', [])
             }
         }
 
-        /*
-         Just track the time of the keydown event
-         */
-        $scope.doKeyDown = function () {
-            hooru.keyDown();
-        }
-
 
         $scope.doCalc = function () {
             $state.go('calc');
         }
 
         $scope.doReset = function () {
-            this.write = "";
             hooru.resetProfiledata();
+            this.write = "";
+            if($state.current.name == 'identify'){
+                preparestep('identify');
+            }else{
+                preparestep(0);
+            }
         }
 
 

@@ -4,17 +4,26 @@ angular.module('hooru.result', [])
 
         var output = hooru.getOutput();
 
-        var results = [];
+        $scope.results = [];
+
+        var sortresults = [];
+        var sortrank = []
+
         for (key in output) {
-            //results.push(Math.round(output[key] * 100000).toFixed(6) / 100000 + ": " + key);
-            results.push(key);
+            sortresults[output[key]] = key;
+            sortrank.push(output[key]);
         }
 
-        results.sort();
+        sortrank.sort(sortNumber);
 
-        console.log("The result is:");
-        console.log(results);
+        for(var i = 0; i < sortrank.length; i++){
+            var listitem = Math.round(sortrank[i] * 100000).toFixed(6) / 100000 + " | " + sortresults[sortrank[i]];
+            $scope.results.push(listitem);
+        }
 
-        $scope.results = results;
+        function sortNumber(a,b) {
+            return b - a;
+        }
+
     })
 

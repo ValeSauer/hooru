@@ -1,6 +1,6 @@
 <ion-view view-title="Write">
     <ion-header-bar class="bar bar-header bar-dark">
-        <button class="button button-clear"><i class="icoc ion-arrow-left-b"> zurück</i></button>
+        <a class="button button-clear" href="#/start"><i class="icoc ion-arrow-left-b"> zurück</i></a>
         <h1 class="title" ng-bind-html="title"></h1>
     </ion-header-bar>
     <ion-content scroll="false">
@@ -12,7 +12,7 @@
 
         <div class="row">
             <div class="col">
-                <textarea name="write" style="width: 100%" rows="3" ng-keydown="doKeyDown()" ng-keyup="doKeyUp($event, write)"
+                <textarea id="write" name="write" style="width: 100%" rows="3" ng-change="doKeyUp(write)()"
                           ng-model="write" ng-trim="false" autocomplete="off" autocorrect="off" autocapitalize="off"
                           spellcheck="false" autofocus></textarea>
             </div>

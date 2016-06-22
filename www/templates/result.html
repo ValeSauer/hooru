@@ -1,18 +1,26 @@
-<ion-view view-title="Calc">
-    <ion-header-bar>
-        <h1 class="title"><i class="icon ion-happy-outline"></i> Hooru</h1>
+<ion-view view-title="Result">
+    <ion-header-bar class="bar bar-header bar-dark">
+        <h1 class="title">Ergebnis</h1>
     </ion-header-bar>
     <ion-content>
         <div class="row">
             <div class="col">
-                <ion-item collection-repeat="result in results">
-                    {{result}}
-                </ion-item>
+                <p>Die folgende Liste zeigt, welche Übereinstimmung das neuronale Netz mit den bereits trainierten
+                    Datensätzen erkennen konnte.</p>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <button class="button button-block button-positive" type="submit">Los geht's!</button>
+                <ion-list>
+                    <ion-item ng-repeat="result in results">
+                    {{result}}
+                    </ion-item>
+                </ion-list>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <a class="button button-block button-positive" href="#/start">Zum Start</a>
             </div>
         </div>
     </ion-content>

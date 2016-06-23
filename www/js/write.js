@@ -7,48 +7,48 @@ angular.module('hooru.write', [])
             return;
         }
 
-        if($state.current.name != 'write'){
+        if ($state.current.name != 'write') {
             $ionicPopup.alert({
                 title: "Anleitung",
                 template: 'Hooru wird nun versuchen, dich zu identifizieren. Bitte tippe dafür den folgenden Text möglichst genau ab.'
             });
-        }else{
+        } else {
             $ionicPopup.alert({
                 title: "Anleitung",
                 template: 'Hooru wird nun dein Profil aufzeichnen. Dazu wirst du gebeten, <b>drei mal</b> denselben Satz abzuschreiben.'
             });
         }
 
+        $scope.write = "Test";
 
-        function preparestep(step){
+        $scope.preparestep = function(step){
+            console.log("PREPARING");
             // Prepare for next step
+            hooru.resetProfiledata();
             $scope.step = step;
             hooru.lastkey = 0;
             hooru.lastlength = 0;
 
-            if(step == 'identify'){
+            if (step == 'identify') {
                 $scope.title = "Erkennen";
                 $scope.error = 0;
                 $scope.read = hooru.texts[0];
                 $scope.step = 0;
-            }else{
+            } else {
                 $scope.title = "Lerne " + (step + 1) + "/3";
                 $scope.error = 0;
                 $scope.read = hooru.texts[step];
             }
             $scope.incomplete = true;
+            $scope.write = "asd";
         }
 
-
-        hooru.resetProfiledata();
-        this.write = "";
-
-        if($state.current.name == 'write'){
-            preparestep(0);
-        }else{
-            preparestep('identify');
+        if ($state.current.name == 'write') {
+            $scope.preparestep(0);
+        } else {
+            $scope.preparestep('identify');
         }
-        
+
         /*
          When a key is released track all the data
          */
@@ -61,27 +61,28 @@ angular.module('hooru.write', [])
 
             var lverror = hooru.getError(part1, write);
 
-            if(lverror == 0 && write.length > hooru.lastlength){
+            if (lverror == 0 && write.length > hooru.lastlength) {
                 hooru.keyUp(key);
             }
             hooru.lastlength = write.length;
 
             $scope.read = "<span class='textmarker_" + lverror + "'>" + part1 + "</span>" + part2;
 
-            if (write.length == hooru.texts[$scope.step].length && hooru.getError(hooru.texts[$scope.step], write) <= 1) {
-                if($state.params.mode == 'write'){
+            if (write.length == hooru.texts[$scope.step].length && hooru.getError(hooru.texts[$scope.step], write) == 0) {
+                if ($state.params.mode == 'write') {
                     hooru.upload();
-                    if($scope.step == 0){
-                        preparestep(1);
-                        this.write = "";
-                    }else if($scope.step == 1) {
-                        preparestep(2);
-                        this.write = "";
-                    }else if($scope.step == 2){
+                    if ($scope.step == 0) {
+                        $scope.preparestep(1);
+                        //this.write = "";
+                    } else if ($scope.step == 1) {
+                        $scope.preparestep(2);
+                        // this.write = "";
+                    } else if ($scope.step == 2) {
                         $state.go('calc');
+                        hooru.resetProfiledata();
                         this.write = "";
                     }
-                }else{
+                } else {
 
                     var trainingpopup = $ionicPopup.alert({
                         title: "Arbeite.",
@@ -96,24 +97,40 @@ angular.module('hooru.write', [])
                             'Content-Type': undefined
                         }
                     }
-
-                    $http(req).then(function (response) {
-                        // success
-                        if (response.data) {
-                            var net = new brain.NeuralNetwork();
-                            net.fromJSON(JSON.parse(response.data));
-                            var mydata = hooru.getNormalizedProfileData();
-                            var output = false;
-                            var output = net.run(mydata);
-                            hooru.setOutput(output);
-                            trainingpopup.close();
-                            $state.go('result');
-                        }
-                    }, function () {
-                        console.log("Download error");
-                    });
                 }
+
+                $http(req).then(function (response) {
+                    // success
+                    if (response.data) {
+                        var net = new brain.NeuralNetwork();
+                        net.fromJSON(JSON.parse(response.data));
+                        var mydata = hooru.getNormalizedProfileData();
+                        var output = false;
+                        var output = net.run(mydata);
+                        hooru.setOutput(output);
+                        trainingpopup.close();
+                        $state.go('result');
+                    }
+                }, function () {
+                    console.log("Download error");
+                });
+            } else if (write.length == hooru.texts[$scope.step].length && hooru.getError(hooru.texts[$scope.step], write) > 0) {
+                $ionicPopup.alert({
+                    title: "Fehlerhafte Eingabe",
+                    template: 'Du hast bei der Eingabe zu viele Rechtschreibfehler gemacht. Bitte wiederhole die Eingabe.',
+                    scope: $scope,
+                    buttons: [
+                        {
+                            text: '<b>OK</b>',
+                            type: 'button-positive',
+                            onTap: function () {
+                                $scope.preparestep($scope.step);
+                            }
+                        }
+                    ]
+                });
             }
+
         }
 
 
@@ -122,12 +139,10 @@ angular.module('hooru.write', [])
         }
 
         $scope.doReset = function () {
-            hooru.resetProfiledata();
-            this.write = "";
-            if($state.current.name == 'identify'){
-                preparestep('identify');
-            }else{
-                preparestep(0);
+            if ($state.current.name == 'identify') {
+                $scope.preparestep('identify');
+            } else {
+                $scope.preparestep(0);
             }
         }
 

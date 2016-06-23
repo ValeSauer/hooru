@@ -29,9 +29,9 @@ angular.module('hooru.hooru', [])
         var self = this;
 
         this.texts = [
-            "Das 1 ist 2 nur 3 ein 4 kleiner 5 Test",
-            "Das 1 ist 2 nur 3 ein 4 kleiner 5 Test",
-            "Das 1 ist 2 nur 3 ein 4 kleiner 5 Test"
+            "Das 1 ist 2 nur 3 ein 4 kleiner 5 Test.",
+            "Das 1 ist 2 nur 3 ein 4 kleiner 5 Test.",
+            "Das 1 ist 2 nur 3 ein 4 kleiner 5 Test."
             // "Ganze zwölf große Boxkämpfer jagen Viktor quer über den Sylter Deich, d0ch er kann s1ch r3tten.",
             // "Fast jeder wackere Bayer vertilgt sich bequem zwei Pfund Kalbshaxen, d0ch auch er kann n1cht an Knöd3ln sparen.",
             // "Auch Stanleys Expeditionszug quer durchs schöne Afrika w1rd von jedermann bewundert, d0ch n1cht von sich s3lbst."
@@ -89,7 +89,6 @@ angular.module('hooru.hooru', [])
         }
 
         this.keyUp = function (key) {
-            console.log("key: " + key);
             var d = new Date();
             var now = d.getTime();
             if (this.profiledata[key]) {
@@ -171,6 +170,7 @@ angular.module('hooru.hooru', [])
             this["t"] = new hd();
             this["u"] = new hd();
             this[" "] = new hd();
+            this["."] = new hd();
         }
 
         this.profiledata = new HooruData();

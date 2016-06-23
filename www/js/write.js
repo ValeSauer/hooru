@@ -7,10 +7,18 @@ angular.module('hooru.write', [])
             return;
         }
 
-        $ionicPopup.alert({
-            title: "Anleitung",
-            template: 'Hooru wird nun dein Profil aufzeichnen. Bitte tippe dafür die folgenden Texte möglichst genau ab.'
-        });
+        if($state.current.name != 'write'){
+            $ionicPopup.alert({
+                title: "Anleitung",
+                template: 'Hooru wird nun versuchen, dich zu identifizieren. Bitte tippe dafür den folgenden Text möglichst genau ab.'
+            });
+        }else{
+            $ionicPopup.alert({
+                title: "Anleitung",
+                template: 'Hooru wird nun dein Profil aufzeichnen. Dazu wirst du gebeten, <b>drei mal</b> denselben Satz abzuschreiben.'
+            });
+        }
+
 
         function preparestep(step){
             // Prepare for next step

@@ -6,7 +6,12 @@
     <ion-content scroll="false">
         <div class="row">
             <div class="col">
-                <p ng-bind-html="read"></p>
+                <p>Bitte schreibe den unten stehenden Text ab:</p>
+                <div class="card">
+                    <div class="item item-text-wrap">
+                        <p ng-bind-html="read"></p>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -14,7 +19,7 @@
             <div class="col">
                 <textarea id="write" name="write" style="width: 100%" rows="3" ng-change="doKeyUp(write)()"
                           ng-model="write" ng-trim="false" autocomplete="off" autocorrect="off" autocapitalize="off"
-                          spellcheck="false" autofocus></textarea>
+                          spellcheck="false" autofocus placeholder="Schreibe den Text hier rein"></textarea>
             </div>
         </div>
         <div class="row">
@@ -22,7 +27,9 @@
                 <button class="button button-block button-stable" ng-click="doReset()">Reset</button>
             </label>
             <label class="col">
-                <button ng-disabled="incomplete" class="button button-block button-positive" ng-click="doCalc()">Absenden</button>
+                <button ng-disabled="incomplete" class="button button-block button-positive" ng-click="doCalc()">
+                    Absenden
+                </button>
             </label>
         </div>
     </ion-content>

@@ -49,7 +49,7 @@ angular.module('hooru.calc', [])
 
                     if(result.error < 0.005) {
                         var resulttitle = "Training beendet.";
-                        var resultmessage = '<p>Das neuronale Netzwerk wurde in ' + difftime + ' Sekunden trainiert und kann dich jetzt erkennen.</p><p>Fehler: ' + result.error + '<br>Iterationen: ' + result.iterations;
+                        var resultmessage = '<p>Das neuronale Netzwerk wurde in ' + difftime + ' Sekunden trainiert und sollte dich von nun an erkennen können.</p><p>Fehler: ' + result.error + '<br>Iterationen: ' + result.iterations;
                     }else{
                         var resulttitle = "Training fehlgeschlagen.";
                         var resultmessage = '<p>Das neuronale Netzwerk konnte anhand der Trainingdaten nicht erfolgreich trainiert werden.</p><p>Fehler: ' + result.error + '<br>Iterationen: ' + result.iterations;

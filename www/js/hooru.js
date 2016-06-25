@@ -116,43 +116,7 @@ angular.module('hooru.hooru', [])
             this.count = 0;
         }
 
-/*        function HooruData() {
-            this["0"] = new hd();
-            this["1"] = new hd();
-            this["3"] = new hd();
-            this["a"] = new hd();
-            this["b"] = new hd();
-            this["c"] = new hd();
-            this["d"] = new hd();
-            this["e"] = new hd();
-            this["f"] = new hd();
-            this["g"] = new hd();
-            this["h"] = new hd();
-            this["i"] = new hd();
-            this["j"] = new hd();
-            this["k"] = new hd();
-            this["l"] = new hd();
-            this["m"] = new hd();
-            this["n"] = new hd();
-            this["o"] = new hd();
-            this["p"] = new hd();
-            this["q"] = new hd();
-            this["r"] = new hd();
-            this["s"] = new hd();
-            this["t"] = new hd();
-            this["u"] = new hd();
-            this["v"] = new hd();
-            this["w"] = new hd();
-            this["x"] = new hd();
-            this["y"] = new hd();
-            this["z"] = new hd();
-            this["dot"] = new hd();
-            this["comma"] = new hd();
-            this["space"] = new hd();
-        }*/
-
         function HooruData() {
-            this["0"] = new hd();
             this["1"] = new hd();
             this["2"] = new hd();
             this["3"] = new hd();

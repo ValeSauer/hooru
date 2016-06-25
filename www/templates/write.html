@@ -17,8 +17,8 @@
 
         <div class="row">
             <div class="col">
-                <textarea id="write" name="write" style="width: 100%" rows="3" ng-change="doKeyUp(write)()"
-                          ng-model="write" ng-trim="false" autocomplete="off" autocorrect="off" autocapitalize="off"
+                <textarea style="width: 100%" rows="3" ng-change="doKeyUp(write.text)"
+                          ng-model="write.text" ng-trim="false" autocomplete="off" autocorrect="off" autocapitalize="off"
                           spellcheck="false" autofocus placeholder="Schreibe den Text hier rein"></textarea>
             </div>
         </div>

@@ -10,12 +10,12 @@ angular.module('hooru.write', [])
         if ($state.current.name != 'write') {
             $ionicPopup.alert({
                 title: "Anleitung",
-                template: 'Hooru wird nun versuchen, dich zu identifizieren. Bitte tippe dafür den folgenden Text möglichst genau ab.'
+                template: 'Hooru wird nun versuchen, dich zu identifizieren. Bitte tippe dafür den folgenden Text möglichst genau ab. Nutze dabei weder Swipen noch andere alternative Eingabemethoden.'
             });
         } else {
             $ionicPopup.alert({
                 title: "Anleitung",
-                template: 'Hooru wird nun dein Profil aufzeichnen. Dazu wirst du gebeten, <b>drei mal</b> denselben Satz abzuschreiben.'
+                template: 'Hooru wird nun dein Profil aufzeichnen. Dazu wirst du gebeten, <b>drei mal</b> denselben Satz abzutippen. Nutze dabei weder Swipen noch andere alternative Eingabemethoden.'
             });
         }
 
